@@ -1,0 +1,17 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+
+  ],
+  "env": {
+    "BOT_TOKEN": "NTg5MjE3MTI4NDczOTUyMjg5.XQQf1w.mIdXNN8eNwnKNk57ZawiVv6uy7s"
+  },
+  "formation": {
+  },
+  "name": "arbot",
+  "scripts": {
+  },
+  "stack": "container"
+}
