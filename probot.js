@@ -12,44 +12,128 @@ const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
+const Discord = require("discord.js");
+const bot = new Discord.Client({ disableEveryone: false });
+const fs = require("fs");
+const botconfig = require("./botconfig.json")
+const toTime = require("to-time")
+const ms = require("ms")
+bot.mutes = require("./mutes.json")
+let client = bot;
+bot.on(`ready`, () => {
+    console.log(`Logged in as ${bot.user.tag}!`);
+    bot.user.setStatus("online")
+    bot.setInterval(() => {
+        for (let i in bot.mutes) {
+            let time = bot.mutes[i].time;
+            let guildID = bot.mutes[i].guildid;
+            let member = bot.mutes[i].muted
+            let roleid = bot.mutes[i].roleid
+            let mutereason = "Mute time is over"
+            if (Date.now() > time) {
+                bot.guilds.get(guildID).members.get(`${member}`).removeRole(roleid, mutereason)
+                delete bot.mutes[i];
+                fs.writeFile("./mutes.json", JSON.stringify(bot.mutes, null, 4), err => {
+                    if (err) throw err;
+                })
+            }
+        }
+    }, 5000)
+});
+bot.on("guildMemberAdd", async (member) => {
+    for (let i in bot.mutes) {
+        let data = bot.mutes[i];
+        if(data === undefined) return;
+        if(data.guildid !== member.guild.id) return;
+        let mutereason = "ليه تهرب ي بابا امواح م رح أسيبك"
+        let guildID = bot.mutes[i].guildid;
+        if (member.id === bot.mutes[i].muted) {
+            bot.guilds.get(`${guildID}`).members.get(`${member.id}`).addRole(`${bot.mutes[i].roleid}`, mutereason)
+        } else {
+            return;
+        }
+    }
+   
+})
+bot.on("message", async message => {
+    let prefix = `$` //يمديك تغيره لو تبي
+    let messageArray = message.content.split(" ");
+    let msg = message;
+    let cmd = messageArray[0];
+    let args = messageArray.slice(1);
+    //administration stuff here
+    if (message.content.startsWith(prefix + "mute")) {
+        message.delete();
+        let themuteguy = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+        if (!themuteguy) return message.channel.send("**الرجاء وضع المنشن**").then(msg => msg.delete(8000))
+        let roleid = message.guild.roles.find(c => c.name === "Muted")
+            if(themuteguy.roles.has(roleid.id)) return message.channel.send("This guy already is muted")
+        let mutereason = args.join(" ").slice(24)
+        if (!mutereason) return message.reply(`\`Usage: ${prefix}mute mention time reason\``)
+        let time = args[1]
+        if (
+            time != "5m"//هنا يمديك تغير الأوقات لو غيرت الي تحت
+            && time != "1h"
+            && time != "3h"
+            && time != "12h"
+            && time != "24h"
+            && time != "1d"
+            && time != "3d"
+            && time != "7d"
+            || !time
+        ) return message.channel.send(`\`The time must be 5m/1h/3h/12h/1d/3d/7d\``) //هنا غير الوقت لو ضفت من الي تحت
+                          //هنا يمديك تغير الأوقات او تضيف اوقات
+        time = time.replace("5m", 300)//5 دقائق
+        time = time.replace("1h", 3600)//ساعة
+        time = time.replace("3h", 10800)// 3 ساعات
+        time = time.replace("12h", 43200)// 12 ساعة
+        time = time.replace("1d", 86400)// يوم
+        time = time.replace("3d", 259200)// 3 ايام
+        time = time.replace("7d", 604800)// 7 ايام
+        let muteembed = new Discord.RichEmbed()//اللوق
+            .setAuthor("Mute log!")
+            .setColor("#FFFFFF")
+            .setTimestamp()
+            .addField("For:", `${themuteguy} ID: ${themuteguy.id}`)
+            .addField("By:", `${message.author} ID: ${message.author.id}`)
+            .addField("Reason:", mutereason)
+            .addField("Time", `${ms(1000 * time, { long: true })}`)
+        if (!roleid) {
+            try {
+                muterole = await message.guild.createRole({
+                    name: "Muted",
+                    permissions: []
+                })
+                message.guild.channels.forEach(async (channel) => {
+                    await channel.overwritePermissions(muterole, {
+                        SEND_MESSAGES: false,
+                        ADD_REACTIONS: false
+                    });
+                });
+            } catch (e) {
+                console.log(e.stack);
+            }
+        }
+        bot.mutes.count+++1
+        if(isNaN(bot.mutes.count)) bot.mutes.count = 0+1;
+        bot.mutes[bot.mutes.count] = {
+            time: Date.now() + toTime.fromSeconds(time).ms(),
+            muted: themuteguy.id,
+            roleid: roleid.id,
+            guildid: message.guild.id
+        }
+        await message.guild.member(themuteguy.id).addRole(roleid.id, mutereason)
+        fs.writeFile("./mutes.json", JSON.stringify(bot.mutes, null, 4), err => {
+            if (err) throw err;
+            message.reply(`Done <@${themuteguy.id}> Has been muted!`).then(msg => msg.delete(20000))
+            let mutechannel = bot.channels.find(c => c.name === "logs")
+            if (!mutechannel) return;
+            mutechannel.send(muteembed)
+        })
+    }
+});
 
 
-client.on('message', message => {//Toxic Codes
-if(message.content.startsWith(prefix + 'mute')){//Toxic Codes
-    let role = message.guild.roles.find(r => r.name === 'Muted');//Toxic Codes
-    if(!role) message.guild.createRole({name: 'Muted'});//Toxic Codes
-     if(user.bot){//Toxic Codes
-        return message.channel.send(`I can't mute ${user} because he is a bot`);//Toxic Codes
-    }
-    if(user.hasPermission('ADMINISTRATOR')) {//Toxic Codes
-        return message.channel.send(`I can't mute ${user} because he is staff`);//Toxic Codes
-    }//Toxic Codes
-   
-    if(!user){//Toxic Codes
-        message.channel.send(`There's no person to mute tho`);
-    }
-    message.guild.channels.forEach(f => {//Toxic Codes
-        f.overwritePermissions(role, {//Toxic Codes
-            SEND_MESSAGES: false
-        });
-        user.addRole(role);//Toxic Codes
-       
-    });
-     message.channel.send(`I muted ${user}`);
-}
-});//Toxic Codes
- 
- 
-client.on('message', message => {//Toxic Codes
-if(message.content.startsWith(prefix + 'unmute')){//Toxic Codes
-    let role = message.guild.roles.find(r => r.name === 'Muted');//Toxic Codes
-if(!user.roles.has(role)) {
-    return message.channel.send(`He is not muted`);//Toxic Codes
-}
-    user.removeRole(role).then(message.channel.send(`Unmuted ${user}`));
-   
-}
-}); 
 
 
 client.on('message', message => {
