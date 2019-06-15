@@ -33,7 +33,7 @@ const ms = require("ms");
       return message.reply("تم فك الميوت☑").catch(console.error).then(message => message.delete(4000))
   } else {
     message.guild.member(user).removeRole(muteRole).then(() => {
-      return message.reply("تم غك الميوت☑").catch(console.error).then(message => message.delete(4000))
+      return message.reply("تم فك الميوت☑").catch(console.error).then(message => message.delete(4000))
     });
   }
  
