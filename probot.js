@@ -12,9 +12,8 @@ const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
-const Discord = require("discord.js");
+
 const bot = new Discord.Client({ disableEveryone: false });
-const fs = require("fs");
 const botconfig = require("./botconfig.json")
 const toTime = require("to-time")
 const ms = require("ms")
