@@ -1766,7 +1766,7 @@ client.on('message', message => {
       🔹  ${prefix}toggleInvitedby | To Turn Off & On Invited By Message`)
       message.channel.sendEmbed(embed)
     }
-        });
+        })
     
 
 client.on('message', message => {
@@ -1786,7 +1786,6 @@ message.author.sendMessage(`
 3- :warning: صيانه يوميه
 4- :money_with_wings: مجاني بالكامل
 5- :shield: يحتوي على مانع اختراق سيرفرات للحفاظ على امان سيرفرك
-6- :musical_note: يحتوي على خاصيه ميوزك بجوده عاليه
 [❖═════════════════════════════❖]
 
 الاوامر العامة
