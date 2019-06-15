@@ -574,7 +574,7 @@ if (message.content.startsWith(prefix + "rank")) {
       }
 if (!id[getvalueof.id]) id[getvalueof.id] = {textrank: 0,points: 1};
             let Image = Canvas.Image,
-            canvas = new Canvas(400, 200),
+            canvas = canvas.createCanvas(400, 200),
             ctx = canvas.getContext('2d');
             fs.readFile("./id/rank.png", function (err, Background) {
             if (err) return console.log(err);
@@ -641,10 +641,10 @@ message.channel.sendFile(canvas.toBuffer());
 });
 });
 client.on('message', message => {
-  if(message.content.startsWith(`${prefix}invite`)){
+  if(message.content.startsWith(`${prefix}inv`)){
     var embed = new Discord.RichEmbed()
     .setTitle(">> ClickHere To Add" + `${client.user.username}` + " <<")
-    .setURL("https://discordapp.com/oauth2/authorize?client_id=" + `${client.user.id}` + "&scope=bot&permissions=2080374975")
+    .setURL("https://discordapp.com/oauth2/authorize?client_id=589217128473952289&permissions=8&scope=bot" + `${client.user.id}` + "&scope=bot&permissions=2080374975")
     .setTimestamp()
     .setFooter(`Requested By | ${message.author.username}`)
     .setColor("RANDOM")
@@ -1507,7 +1507,7 @@ client.on('ready', () => {
   console.log(`|===================================|`);
   console.log(`| Created By <@429972030092476437> |`);
   console.log(`|===================================|`);
-  console.log(`|        Probot Log By You !      |`);
+  console.log(`|      AR Gamers bot Log By You !   |`);
   console.log(`|===================================|`);
 });
 client.on('message', msg => {
@@ -1696,7 +1696,7 @@ client.on("message", message => {
 });
 
 client.on('message', message => {
-  var prefix = "#";
+  var prefix = "+";
     if (message.author.kick) return;
     if (!message.content.startsWith(prefix)) return;
   
@@ -1920,9 +1920,9 @@ message.author.sendMessage(`
 
 اخرى 
 
-+support رابط سيرفر الدعم الفني
+رابط سيرفر الدعم الفني
 
-+invite رابط اضافة البوت
++inv رابط اضافة البوت
 
 +ping لمعرفه سرعه اتصال البوت
 
@@ -2310,7 +2310,7 @@ message.channel.stopTyping()
 }
 });
 client.on('message', message =>{
-  if(message.content === '#ping'){
+  if(message.content === '+ping'){
 let start = Date.now(); message.channel.send('pong').then(message => { 
 message.edit(`\`\`\`js
 Time taken: ${Date.now() - start} ms
@@ -2320,7 +2320,7 @@ Discord API: ${client.ping.toFixed(0)} ms\`\`\``);
 });
 client.on('message', message => {
   if(!message.channel.guild) return;
-if(message.content.startsWith('#bc')) {
+if(message.content.startsWith('+bc')) {
 if(!message.channel.guild) return message.channel.send('**هذا الأمر فقط للسيرفرات**').then(m => m.delete(5000));
 if(!message.member.hasPermission('ADMINISTRATOR')) return      message.channel.send('**للأسف لا تمتلك صلاحية** `ADMINISTRATOR`' );
 let args = message.content.split(" ").join(" ").slice(2 + prefix.length);
@@ -2382,7 +2382,7 @@ client.on('ready', () => {
     console.log(`[ ] ${client.users.size}`)
 });
 client.on('ready', () => {
-     client.user.setActivity("you",{type: 'WATCHING'});
+     client.user.setActivity("+help | +inv",{type: 'Streaming'});
 
 });
 
@@ -3050,7 +3050,7 @@ client.on("guildMemberAdd", member => {
 }).catch(console.error)
 })
 
-    const devs = ['ايديك'];
+    const devs = ['589436042919149568'];
 
 client.on('message', message => {
     let argresult = message.content.split(` `).slice(1).join(' ');
