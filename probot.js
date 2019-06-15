@@ -568,6 +568,7 @@ message.channel.send(`**⛔ The AntiHack Is __𝐎𝐅𝐅__ !**`)
   })
   
   })
+let data = JSON.parse(fs.readFileSync("./data.json", "utf8"))
   client.on('guildMemberRemove', (u) => {
       if(!antihack[u.guild.id]) antihack[u.guild.id] = {
         onoff: 'Off'
