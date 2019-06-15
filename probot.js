@@ -63,6 +63,7 @@ client.on('message',function(message) {
 
    }
 
+});
 
 const ms = require("ms");
   client.on("message", message => {
