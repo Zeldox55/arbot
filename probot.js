@@ -56,7 +56,7 @@ bot.on("guildMemberAdd", async (member) => {
    
 })
 bot.on("message", async message => {
-    let prefix = `$` //يمديك تغيره لو تبي
+    let prefix = `+` //يمديك تغيره لو تبي
     let messageArray = message.content.split(" ");
     let msg = message;
     let cmd = messageArray[0];
