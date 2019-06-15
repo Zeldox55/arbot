@@ -13,6 +13,85 @@ let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
+client.on('message',function(message) {
+
+ if(!message.channel.guild) return;    let messageArray = message.content.split(' ');
+
+    let muteRole =  message.guild.roles.find('name', 'Muted');
+
+    let muteMember = message.mentions.members.first();
+
+    let muteReason = messageArray[2];
+
+    let muteDuration = messageArray[3];
+
+ if (message.content.split(" ")[0].toLowerCase() === prefix + "mute") {
+
+           
+
+  if (message.author.bot) return;
+
+       if(!muteRole) return message.guild.createRole({name: 'Muted'}).then(message.guild.channels.forEach(chan => chan.overwritePermissions(muteRole, {SEND_MESSAGES:false,ADD_REACTIONS:false})));
+
+       if(!message.guild.member(message.author).hasPermission("MANAGE_ROLES")) return message.channel.send('ليست لديك رتبة لاعطاء ميوت');
+
+       if(!message.guild.member(client.user).hasPermission("MANAGE_ROLES")) return message.channel.send(' ليست لدي البرمشن');
+
+       if(!muteMember) return message.channel.send(' المرجوا منشنت الشخص').then(message => message.delete(4000))
+
+       if(!muteReason) return message.channel.send(' المرجو كتابة سبب الميوت').then(message => message.delete(4000))
+
+       if(!muteDuration) return message.channel.send(' المرجو منك وضع مدة الميوت`` \n Ex: #mute @user reason 1m ').then(message => message.delete(4000))
+
+       if(!muteDuration.match(/[1-7][s,m,h,d,w]/g)) return message.channel.send(' لقد تم اعطائه ميوت سابقا').then(message => message.delete(4000))
+
+       message.channel.send(`لقد تم اعطاء${muteMember} ميوت 🤐  .`).then(message => message.delete(5000))
+
+       muteMember.addRole(muteRole);
+
+       muteMember.setMute(true)
+
+       .then(() => { setTimeout(() => {
+
+           muteMember.removeRole(muteRole)
+
+           muteMember.setMute(false)
+
+       }, mmss(muteDuration));
+
+       });
+
+   }
+
+
+const ms = require("ms");
+  client.on("message", message => {
+ if(!message.channel.guild) return;  
+  if (message.author.bot) return;
+ 
+  let command = message.content.split(" ")[0];
+ 
+  if (message.content.split(" ")[0].toLowerCase() === prefix + "unmute") {
+        if (!message.member.hasPermission('MANAGE_ROLES')) return;
+  let user = message.mentions.users.first();
+  let modlog = client.channels.find('name', 'log');
+  let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'Muted');
+  if (!muteRole) return message.reply(" I Can’t Find 'Muted' Role ").catch(console.error).then(message => message.delete(4000))
+  if (message.mentions.users.size < 1) return message.reply(' Error : ``Mention a User``').catch(console.error).then(message => message.delete(4000))
+  if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return;
+ 
+  if (message.guild.member(user).removeRole(muteRole.id)) {
+      return message.reply("User Has Been UnMuted.").catch(console.error).then(message => message.delete(4000))
+  } else {
+    message.guild.member(user).removeRole(muteRole).then(() => {
+      return message.reply("User Has Been UnMuted.").catch(console.error).then(message => message.delete(4000))
+    });
+  }
+ 
+};
+	
+	
+	
 client.on('message', message => {
    if(!message.channel.guild) return;
 if(message.content.startsWith(prefix + 'bc')) {
