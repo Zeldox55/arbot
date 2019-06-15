@@ -2498,7 +2498,7 @@ if (err) console.error(err)
 });
 })
 
-  const devs = [411613098923786241'];
+  const devs = ['411613098923786241'];
 
 client.on('message', message => {
     let argresult = message.content.split(` `).slice(1).join(' ');
