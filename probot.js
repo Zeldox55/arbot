@@ -40,7 +40,7 @@ const ms = require("ms");
 };
  
 });
-const ms = require("ms");
+
   client.on("message", message => {
  if(!message.channel.guild) return;  
   if (message.author.bot) return;
