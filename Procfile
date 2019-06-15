@@ -1,1 +1,1 @@
-worker: node probot.js
+worker : node probot.js
