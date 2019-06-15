@@ -13,7 +13,33 @@ let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
-
+const ms = require("ms");
+  client.on("message", message => {
+ if(!message.channel.guild) return;  
+  if (message.author.bot) return;
+ 
+  let command = message.content.split(" ")[0];
+ 
+  if (message.content.split(" ")[0].toLowerCase() === prefix + "unmute") {
+        if (!message.member.hasPermission('MANAGE_ROLES')) return;
+  let user = message.mentions.users.first();
+  let modlog = client.channels.find('name', 'log');
+  let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'Muted');
+  if (!muteRole) return message.reply(" I Can’t Find 'Muted' Role ").catch(console.error).then(message => message.delete(4000))
+  if (message.mentions.users.size < 1) return message.reply(' Error : ``منشن الشخص``').catch(console.error).then(message => message.delete(4000))
+  if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return;
+ 
+  if (message.guild.member(user).removeRole(muteRole.id)) {
+      return message.reply("تم فك الميوت☑").catch(console.error).then(message => message.delete(4000))
+  } else {
+    message.guild.member(user).removeRole(muteRole).then(() => {
+      return message.reply("تم غك الميوت☑").catch(console.error).then(message => message.delete(4000))
+    });
+  }
+ 
+};
+ 
+});
 const ms = require("ms");
   client.on("message", message => {
  if(!message.channel.guild) return;  
