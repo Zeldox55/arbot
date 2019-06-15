@@ -354,6 +354,7 @@ message.channel.send(`**✅ The AntiHack Is __𝐎𝐍__ !**`)
 
 
 client.on('message', message => {
+	let data
     if(message.content.startsWith(prefix + "antihack off")) {
         if(!message.channel.guild) return message.reply('**This Command Only For Servers**');
         if(!message.member.hasPermission('MANAGE_GUILD')) return message.channel.send('**Sorry But You Dont Have Permission** `MANAGE_GUILD`' );
