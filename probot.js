@@ -575,7 +575,7 @@ if (message.content.startsWith(prefix + "rank")) {
       }
 if (!id[getvalueof.id]) id[getvalueof.id] = {textrank: 0,points: 1};
             let Image = Canvas.Image,
-            canvas = canvas.createCanvas(400, 200),
+            canvas = new canvas.createCanvas(400, 200),
             ctx = canvas.getContext('2d');
             fs.readFile("./id/rank.png", function (err, Background) {
             if (err) return console.log(err);
