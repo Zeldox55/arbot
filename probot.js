@@ -1766,7 +1766,7 @@ client.on('message', message => {
       🔹  ${prefix}toggleInvitedby | To Turn Off & On Invited By Message`)
       message.channel.sendEmbed(embed)
     }
-        })
+        });
     
 
 client.on('message', message => {
