@@ -18,7 +18,7 @@ const botconfig = require("./botconfig.json")
 const toTime = require("to-time")
 const ms = require("ms")
 bot.mutes = require("./mutes.json")
-let client = bot;
+
 bot.on(`ready`, () => {
     console.log(`Logged in as ${bot.user.tag}!`);
     bot.user.setStatus("online")
