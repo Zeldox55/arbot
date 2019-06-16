@@ -16,7 +16,7 @@ const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
 
-const fs = require("fs")
+
 const say = JSON.parse(fs.readFileSync('./say.json', 'utf8'))
 
 client.on("message", message =>
