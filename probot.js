@@ -12,6 +12,101 @@ const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
+
+
+
+
+client.on('message', async msg => {
+
+    var prefix = "+";
+
+    var user = msg.author;
+
+            var a = msg.guild.roles.find("name", 'عضو');
+
+        if(!a){
+
+        a = await msg.guild.createRole({
+
+          name: "عضو",
+
+          color: "#ffffff",
+
+          permissions:[]
+
+        })
+
+       
+
+        }
+
+       
+
+ 
+
+        if (msg.content.startsWith(prefix +'provyourself')) {
+
+ 
+
+        if(!msg.channel.guild) return msg.channel.send('**هذا الأمر فقط للسيرفرات**').then(m =>m.delete(5000));
+
+msg.channel.send(`
+
+**@here
+
+لاتبات نفسك اضغط على ☑
+
+ 
+اتبت نفسك
+**
+
+ 
+
+**<@${msg.author.id}>`).then(res => {    
+
+     res.react('☑').then(r=>{    
+
+ 
+
+    let aaa = (reaction, user) => reaction.emoji.name === '☑' && user.id === msg.author.id;   
+
+   
+
+    let aa = res.createReactionCollector(aaa, { maxMatches:1 , time: 20000 , });
+
+   
+
+aa.on("collect", r => {
+
+    msg.guild.member(user.id).addRole(a);
+
+    msg.channel.send('`تم التحقق من هويتك`');
+
+    msg.delete();
+
+    })
+
+ 
+
+cc.on("collect", r => {
+
+    msg.delete();
+
+})
+
+     
+
+     })
+
+     }
+
+     });
+ 
+
+
+
+
+
 const jimp = require('jimp');
 
 
