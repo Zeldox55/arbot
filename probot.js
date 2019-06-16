@@ -167,7 +167,6 @@ welcomer.sendFile(canvas.toBuffer())
 
 });
 
-let id = JSON.parse(fs.readFileSync("./say.json", "utf8"))
 
 
 const say = JSON.parse(fs.readFileSync('./say.json', 'utf8'))
