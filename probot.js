@@ -12,7 +12,6 @@ const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
-const moment = require('moment');
 const jimp = require('jimp');
 
 
