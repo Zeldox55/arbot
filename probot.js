@@ -16,12 +16,10 @@ const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
 client.on('guildMemberAdd', member => {
-        member.guild.channels.get('589922978238693416').setName(Total Users: ${member.guild.memberCount})
+        member.guild.channels.get('589922978238693416').setName(`Total Users: ${member.guild.memberCount`})
     //الحقوق محفوظه لي ديمون
       });
-client.on('guildMemberRemove', member => {
-        member.guild.channels.get('589922978238693416').setName(Total Users: ${member.guild.memberCount})
-      });
+
 
  
 
