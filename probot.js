@@ -1,4 +1,4 @@
-فconst Discord = require('discord.js');
+const Discord = require('discord.js');
 const moment = require("moment");  
 const fs = require("fs");      
 const dateFormat = require('dateformat');
