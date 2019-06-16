@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+فconst Discord = require('discord.js');
 const moment = require("moment");  
 const fs = require("fs");      
 const dateFormat = require('dateformat');
@@ -16,7 +16,7 @@ const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
 client.on('guildMemberAdd', member => {
-        member.guild.channels.get('589922978238693416').setName(`Total Users: ${member.guild.memberCount`})
+        member.guild.channels.get('589922978238693416').setName(`Server Member: [${member.guild.memberCount]}`)
     //الحقوق محفوظه لي ديمون
       });
 
