@@ -6,7 +6,6 @@ const client = new Discord.Client();
 const Canvas = require("canvas"); 
 const prefix = "+";
 const token = 'BOT_TOKEN';
-const id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"));
 const antihack = JSON.parse(fs.readFileSync('./antihack.json' , 'utf8'));
 const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
@@ -18,7 +17,7 @@ const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
  const yourID = "411613098923786241"; 
-const setupCMD = "-activterole"
+const setupCMD = "+activterole"
 let initialMessage = ``;
 const roles = ["♱  عــــضــــو ☯"];
 const reactions = ['☑'];
@@ -32,7 +31,7 @@ if (roles.length !== reactions.length) throw "Roles list and reactions list are 
 function generateMessages(){
     var messages = [];
     messages.push(initialMessage);
-     for (let role of roles) messages.push(`اضغط على الاموجي لتتبت نفسك **"${role}"** !`); 
+     for (let role of roles) messages.push(`**@everyone | @here \n اضغط على الاموجي لتتبت نفسك \n **"${role}"** !**`); 
     return messages;
 }
  
