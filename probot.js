@@ -5,7 +5,7 @@ const dateFormat = require('dateformat');
 const client = new Discord.Client(); 
 const Canvas = require("canvas"); 
 const prefix = "+";
-const token = 'توكن البوت';
+const token = 'BOT_TOKEN';
 const id = JSON.parse(fs.readFileSync("./id/rank.json", "utf8"));
 const antihack = JSON.parse(fs.readFileSync('./antihack.json' , 'utf8'));
 const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
@@ -15,10 +15,6 @@ const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
 
 
-client.on('guildMemberAdd', member => {
-        member.guild.channels.get('589922978238693416').setName(`Server Member: [${member.guild.memberCount]}`)
-    //الحقوق محفوظه لي ديمون
-      });
 
 
  
