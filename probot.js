@@ -259,7 +259,7 @@ var filter = m => m.author.id === message.author.id;
     });
   })
 })
-  })
+  
   
   
   
