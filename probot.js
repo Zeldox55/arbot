@@ -120,11 +120,11 @@ client.on('raw', event => {
 
 client.on('message',async message => {
   if(message.author.bot) return;
-var prefix = "#"
+var prefix = "+"
 if(message.content.indexOf(prefix) !== 0) return;
 const args = message.content.slice(prefix.length).trim().split(/ +/g);
 const command = args.shift().toLowerCase();
-if(command === "start") {
+if(command === "gstart") {
 var title = args[0].split('-').join(" ");
 if(args[2]) {
   message.channel.send(` \`\`\`MD
@@ -165,8 +165,8 @@ upgradeTime = upgradeTime * 2 / 2 + (day * 24 * 60 * 60);
 var seconds = upgradeTime;
 var duration = (upgradeTime * 1000)
   if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **s You Dont Have Premission**');
-  if(!args) return message.channel.send(`**Use : #start  <Presentse> <Time>**`);
-  if(!title) return message.channel.send(`**Use : **\`#start ${args[0]} Minutes\`** <Presentse>**`);
+  if(!args) return message.channel.send(`**Use : +gstart  <Presentse> <Time>**`);
+  if(!title) return message.channel.send(`**Use : **\`+gstart ${args[0]} Minutes\`** <Presentse>**`);
   if(!isNaN(args[1])) return message.channel.send(':heavy_multiplication_x:| **The Time Be Nambers `` Do the Commend Agin``**');
         let giveEmbed = new Discord.RichEmbed()
       .setAuthor(message.guild.name, message.guild.iconURL)
