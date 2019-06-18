@@ -1902,19 +1902,17 @@ omar.reply("`تم حذف جميع الرتب بنجاح`")
 }
 });
 
-client.on('message', message => {
-    if(message.content.startsWith(prefix + 'welcome')) {
-      let embed = new Discord.RichEmbed()
-      .setTitle('Welcome Commands :') 
-      .setDescription(`${prefix}setWelcomer | To Set The Welcome
-      🔹 ${prefix}setLeave | To Set The Leave Message..etc
-      🔹 ${prefix}toggleLeave | To Turn Off & On The Leave Message [if you do setleave it will turned on automaticly] 
-      🔹 ${prefix}toggleWelcome | To Turn Off & On The Welcome[if you do setleave it will turned on automaticly]
-      🔹 ${prefix}toggleDmwelcome | To Turn Off & On The Dm Welcome Message
-      🔹  ${prefix}toggleInvitedby | To Turn Off & On Invited By Message`)
-      message.channel.sendEmbed(embed)
-    }
-        })
+client.on('guildMemberAdd', member => {
+  member.guild.fetchInvites().then(guildInvites => {
+    const ei = invites[member.guild.id];
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const xkiller = member.guild.channels.find("name", "✿-welcome_الـترحــيـب");
+     xkiller.send(`<@${member.user.id}> تمت الدعوه من <@${inviter.id}>`);
+  });
+});
+
+
     
 
 client.on('message', message => {
@@ -2012,15 +2010,6 @@ message.author.sendMessage(`
 });
 
 
-client.on('guildMemberAdd', member => {
-  member.guild.fetchInvites().then(guildInvites => {
-    const ei = invites[member.guild.id];
-    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
-    const inviter = client.users.get(invite.inviter.id);
-    const xkiller = member.guild.channels.find("name", "✿-welcome_الـترحــيـب");
-     xkiller.send(`<@${member.user.id}> تمت الدعوه من <@${inviter.id}>`);
-  });
-});
 
 
 
