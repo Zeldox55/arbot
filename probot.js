@@ -11,6 +11,18 @@ const antijoin = JSON.parse(fs.readFileSync('./antijoin.json' , 'utf8'));
 let antibots = JSON.parse(fs.readFileSync('./antibots.json' , 'utf8'));
 const log = JSON.parse(fs.readFileSync('./log.json' , 'utf8'));
 
+client.on('guildMemberAdd', member => {
+    var embed = new Discord.RichEmbed()
+    .setThumbnail(member.user.avatarURL)
+  .addField("***شكرا الانضمامك الينا***" ,member.user.username )
+    .setDescription('***بكل حب واحترام وشوق نستقبلك ونتمنى لك قضآء أجمل اللحظات ولآوقات معنا***')
+    .setColor('RANDOM')
+    .setImage('http://www.imgion.com/images/01/Welcome-buddy.jpg')
+var channel =member.guild.channels.find('name', '✿-welcome_الـترحــيـب')
+if (!channel) return;
+channel.send({embed : embed});
+});
+
 
 
  client.on('guildMemberAdd', member => {
