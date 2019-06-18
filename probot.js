@@ -185,6 +185,111 @@ client.on('message', async message => {
 
   
 
+var filter = m => m.author.id === message.author.id;
+  if(message.content.startsWith(prefix + "giveaway")) {
+
+    if(!message.guild.member(message.author).hasPermission('MANAGE_GUILD')) return message.channel.send(':heavy_multiplication_x:| **يجب أن يكون لديك خاصية التعديل على السيرفر**');
+    message.channel.send(`:eight_pointed_black_star:| **Send Name channel For the Giveaway**`).then(msg => {
+      message.channel.awaitMessages(filter, {
+        max: 1,
+        time: 20000,
+        errors: ['time']
+      }).then(collected => {
+        let room = message.guild.channels.find('name' , collected.first().content);
+        if(!room) return message.channel.send(':heavy_multiplication_x:| **i Found It :(**');
+        room = collected.first().content;
+        collected.first().delete();
+        msg.edit(':eight_pointed_black_star:| **Time For The Giveaway**').then(msg => {
+          message.channel.awaitMessages(filter, {
+            max: 1,
+            time: 20000,
+            errors: ['time']
+          }).then(collected => {
+            if(!collected.first().content.match(/[1-60][s,m,h,d,w]/g)) return message.channel.send('**The Bot Not Support This Time**');
+            duration = collected.first().content
+            collected.first().delete();
+        }).then(collected => {
+             title = collected.first().content
+            msg.edit(':eight_pointed_black_star:| **Now send The Present **').then(msg => {
+              message.channel.awaitMessages(filter, {
+                max: 1,
+                time: 20000,
+                errors: ['time']
+              }).then(collected => {
+                gMembers = collected.first().content
+                collected.first().delete();
+                msg.edit(':eight_pointed_black_star:| **Now send The Winners **').then(msg => {
+                    message.channel.awaitMessages(filter, {
+                      max: 1,
+                      time: 20000,
+                      errors: ['time']
+                    }).then(collected => {
+                collected.first().delete();
+                msg.delete();
+                message.delete();
+                    
+                try {
+                  let giveEmbed = new Discord.RichEmbed()
+                  .setDescription(`**${title}** \nReact With 🎉 To Enter! \nTime remaining : ${duration} \n **Created at :** ${hours}:${minutes}:${seconds} ${suffix}`)
+                  .setFooter(message.author.username, message.author.avatarURL);
+                  message.guild.channels.find("name" , room).send(' :heavy_check_mark: **Giveaway Created** :heavy_check_mark:' , {embed: giveEmbed}).then(m => {
+                     let re = m.react('🎉');
+                     setTimeout(() => {
+                       let users = m.reactions.get("🎉").users
+                       let list = users.array().filter(u => u.id !== m.author.id !== client.user.id);
+                       let gFilter = list[Math.floor(Math.random() * list.length) + 0]
+                       let endEmbed = new Discord.RichEmbed()
+                       .setAuthor(message.author.username, message.author.avatarURL)
+                       .setTitle(title)
+                       .addField('Giveaway Ended !🎉',`Winners : ${gFilter} \nEnded at :`)
+                       .setTimestamp()
+					 m.edit('** 🎉 GIVEAWAY ENDED 🎉**' , {embed: endEmbed});
+					message.guild.channels.find("name" , room).send(`**Congratulations ${gFilter}! You won The \`${title}\`**` , {embed: {}})
+                }, ms(duration));
+            });
+                } catch(e) {
+                message.channel.send(`:heavy_multiplication_x:| **i Don't Have Prem**`);
+                  console.log(e);
+                }
+              });
+            });
+          });
+        });
+      });
+    });
+  })
+})
+  }})
+  
+  
+  
+let newsjson = JSON.parse(fs.readFileSync("./news.json", "utf8")) || {}
+client.on('message', message => {
+    let news = message.content.split(" ").slice(1).join(" ")
+    if(message.content.startsWith(prefix + 'setnews')) {
+      if(message.author.id !== '568859641379946516') return;
+          if(!news) return message.channel.send(`❌ | Please Write The News For Example: ${prefix}setnews fix bugs`)
+           newsjson[client.user.id] = {
+            new: news,
+           }
+           message.channel.send(`✅ | Done The Bot News Has Been Updated !`)
+        }
+    if(message.content.startsWith( prefix + 'news')) {
+        if(!newsjson[client.user.id]) newsjson[client.user.id] = {
+            new: 'nothing'
+        }
+        let embed = new Discord.RichEmbed()
+        .setTitle(`📰 | ${client.user.username} Latest News :`)
+        .setDescription(`${newsjson[client.user.id].new}`)
+        .setTimestamp()
+        .setFooter(`Requested By ${message.author.username}`)
+           message.channel.sendEmbed(embed)
+        }
+        fs.writeFile("./news.json", JSON.stringify(newsjson), (err) => {
+        })
+})
+
+
                          
 
                
