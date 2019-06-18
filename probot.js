@@ -133,7 +133,7 @@ client.on('raw', event => {
 
    
        
-const id = Json.parse(fs.readFileSync('./say.json'. 'utf8'))
+const id = JSON.parse(fs.readFileSync('./say.json'. 'utf8'))
 const say = JSON.parse(fs.readFileSync('./say.json', 'utf8'))
 
 client.on("message", message =>
