@@ -96,6 +96,8 @@ client.on('raw', event => {
 
 
 
+
+
          
 
    
@@ -427,61 +429,8 @@ client.on("guildMemberAdd", async member => {
     }
   });
 
-  let points = {}
 
-client.on("message", message => {
-	  if (!message.guild || message.author.bot) return;
-      if (message.content == "+colors") {
-          var fsn = require('fs-nextra');
-          fs.readdir('./colors', async (err, files) => {
-              var f = files[Math.floor(Math.random() * files.length)];
-              var {
-                  Canvas
-              } = require('canvas-constructor');
-              var x = 0;
-              var y = 0;
-              if (message.guild.roles.filter(role => !isNaN(role.name)).size <= 0) return;
-              message.guild.roles.filter(role => !isNaN(role.name)).sort((b1, b2) => b1.name - b2.name).forEach(() => {
-                  x += 100;
-                  if (x > 100 * 12) {
-                      x = 100;
-                      y += 80;
-                  }
-              });
-              var image = await fsn.readFile(`./colors/${f}`);
-              var xd = new Canvas(100 * 11, y + 350) // كانت 250 يلي هو الحين 350
-                  .addBeveledImage(image, 0, 0, 100 * 11, y + 350, 100) // يلي هي الحين 350 كانت 250 و يلي هي الحين 100 كانت 50
-                  .setTextBaseline('middle')
-                  .setColor('white')
-                  .setTextSize(60)
-                  .addText(`قائمة الألوان`, 375, 40);
-              x = 0;
-              y = 150;
-              message.guild.roles.filter(role => !isNaN(role.name)).sort((b1, b2) => b1.name - b2.name).forEach(role => {
-                  x += 75;
-                  if (x > 100 * 10) {
-                      x = 75;
-                      y += 80;
-                  }
-                  xd
-                      .setTextBaseline('middle')
-                      .setTextAlign('center')
-                      .setColor(role.hexColor)
-                      .addBeveledRect(x, y, 60, 60, 15)
-                      .setColor('white');
-                  if (`${role.name}`.length > 2) {
-                      xd.setTextSize(30);
-                  } else if (`${role.name}`.length > 1) {
-                      xd.setTextSize(40);
-                  } else {
-                      xd.setTextSize(50);
-                  }
-                  xd.addText(role.name, x + 30, y + 30);
-              });
-              message.channel.sendFile(xd.toBuffer());
-          });
-      }
-  })
+              
 
 
 
@@ -820,15 +769,15 @@ client.on('message', message => {
     let role = new Discord.RichEmbed()
   .setDescription(`
   امثله على اعطاء رتبه : 
-  #role @mention rolename : لأعطاء رتبة لعضو معين
-  #role all rolename : لأعطاء رتبة للجميع 
-  #role humans rolename : لأعطاء رتبة للاشخاص فقط
-  #role bots rolename : لأعطاء رتبة لجميع البوتات
+  +role @mention rolename : لأعطاء رتبة لعضو معين
+  +role all rolename : لأعطاء رتبة للجميع 
+  +role humans rolename : لأعطاء رتبة للاشخاص فقط
+  +role bots rolename : لأعطاء رتبة لجميع البوتات
   امثله على سحب رتبه
-  #-role @mention rolename : لسحب رتبة لعضو معين
-  #-role all rolename : لسحب رتبة للجميع 
-  #-role humans rolename : لسحب رتبة للاشخاص فقط
-  #-role bots rolename : لسحب رتبة لجميع البوتات`)
+  +-role @mention rolename : لسحب رتبة لعضو معين
+  +-role all rolename : لسحب رتبة للجميع 
+  +-role humans rolename : لسحب رتبة للاشخاص فقط
+  +-role bots rolename : لسحب رتبة لجميع البوتات`)
   .setFooter('Requested by '+message.author.username, message.author.avatarURL)
 message.channel.sendEmbed(role)
   }})
@@ -1900,16 +1849,6 @@ m.delete();
 });
 omar.reply("`تم حذف جميع الرتب بنجاح`")
 }
-});
-
-client.on('guildMemberAdd', member => {
-  member.guild.fetchInvites().then(guildInvites => {
-    const ei = invites[member.guild.id];
-    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
-    const inviter = client.users.get(invite.inviter.id);
-    const xkiller = member.guild.channels.find("name", "✿-welcome_الـترحــيـب");
-     xkiller.send(`<@${member.user.id}> تمت الدعوه من <@${inviter.id}>`);
-  });
 });
 
 
