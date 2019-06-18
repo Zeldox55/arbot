@@ -112,7 +112,73 @@ client.on('raw', event => {
              
 
          
+const reply = JSON.parse(fs.readFileSync('./replys.json' , 'utf8'));
+client.on('message', async message => {
+    let messageArray = message.content.split(" ");
+   if(message.content.startsWith(prefix + "setReply")) {
+    let filter = m => m.author.id === message.author.id;
+    let thisMessage;
+    let thisFalse;
 
+    if(!message.member.hasPermission("MANAGE_GUILD")) return message.channel.send('You don\'t have permission').then(msg => {
+       msg.delete(4500);
+       message.delete(4500);
+    });
+    
+    message.channel.send(':pencil: **| من فضلك اكتب الرساله الان... :pencil2: **').then(msg => {
+
+        message.channel.awaitMessages(filter, {
+          max: 1,
+          time: 90000,
+          errors: ['time']
+        })
+        .then(collected => {
+            collected.first().delete();
+            thisMessage = collected.first().content;
+            let boi;
+            msg.edit(':scroll: **| من فضلك اكتب الرد الان... :pencil2: **').then(msg => {
+      
+                message.channel.awaitMessages(filter, {
+                  max: 1,
+                  time: 90000,
+                  errors: ['time']
+                })
+                .then(collected => {
+                    collected.first().delete();
+                    boi = collected.first().content;
+                    msg.edit('✅ **| تم الاعداد بنجاح...  **').then(msg => {
+        
+                      message.channel.awaitMessages(filter, {
+                        max: 1,
+                        time: 90000,
+                        errors: ['time']
+                      })
+                      let embed = new Discord.RichEmbed()
+                      .setTitle('**Done The Autoreply Code Has Been Setup**')
+                      .addField('Message:', `${thisMessage}`)
+                      .addField('Reply:', `${boi}`)
+                      .setThumbnail(message.author.avatarURL)
+                      .setFooter(`${client.user.username}`)
+                     message.channel.sendEmbed(embed)
+    reply[message.guild.id] = {
+        msg: thisMessage,
+        reply: boi,
+    }
+    fs.writeFile("./replys.json", JSON.stringify(reply), (err) => {
+    if (err) console.error(err)
+  })
+   } 
+            )
+        })
+    })
+})
+    })
+}})             
+client.on('message', async message => {
+   if(message.content === reply[message.guild.id].msg) {
+       message.channel.send(reply[message.guild.id].reply)
+   }}
+)
  
 
  
@@ -122,7 +188,17 @@ client.on('raw', event => {
                          
 
                
-
+client.on('guildMemberAdd', member => {
+  member.guild.fetchInvites().then(guildInvites => {
+    const ei = invites[member.guild.id];
+    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const inviter = client.users.get(invite.inviter.id);
+    const stewart = member.guild.channels.find("name", "welcome");
+     stewart.send(`<@${member.user.id}> تمت الدعوه من <@${inviter.id}>`);
+   //  stewart.send(`<@${member.user.id}> joined using invite code ${invite.code} from <@${inviter.id}>. Invite was used ${invite.uses} times since its creation.`);
+  }); 
+});
+ 
                              
 
    
@@ -160,32 +236,7 @@ const ms = require("ms");
  
 });
 
-  client.on("message", message => {
- if(!message.channel.guild) return;  
-  if (message.author.bot) return;
- 
-  let command = message.content.split(" ")[0];
- 
-  if (message.content.split(" ")[0].toLowerCase() === prefix + "unmute") {
-        if (!message.member.hasPermission('MANAGE_ROLES')) return;
-  let user = message.mentions.users.first();
-  let modlog = client.channels.find('name', 'log');
-  let muteRole = client.guilds.get(message.guild.id).roles.find('name', 'Muted');
-  if (!muteRole) return message.reply(" I Can’t Find 'Muted' Role ").catch(console.error).then(message => message.delete(4000))
-  if (message.mentions.users.size < 1) return message.reply(' Error : ``Mention a User``').catch(console.error).then(message => message.delete(4000))
-  if (!message.guild.member(client.user).hasPermission('MANAGE_ROLES_OR_PERMISSIONS')) return;
- 
-  if (message.guild.member(user).removeRole(muteRole.id)) {
-      return message.reply("User Has Been UnMuted.").catch(console.error).then(message => message.delete(4000))
-  } else {
-    message.guild.member(user).removeRole(muteRole).then(() => {
-      return message.reply("User Has Been UnMuted.").catch(console.error).then(message => message.delete(4000))
-    });
-  }
- 
-};
- 
-});
+  
 
 
 client.on('message',function(message) {
