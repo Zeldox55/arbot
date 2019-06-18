@@ -431,7 +431,7 @@ client.on("guildMemberAdd", async member => {
 
 client.on("message", message => {
 	  if (!message.guild || message.author.bot) return;
-      if (message.content == "#colors") {
+      if (message.content == "+colors") {
           var fsn = require('fs-nextra');
           fs.readdir('./colors', async (err, files) => {
               var f = files[Math.floor(Math.random() * files.length)];
