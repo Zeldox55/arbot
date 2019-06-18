@@ -24,7 +24,7 @@ channel.send({embed : embed});
 });
 
 
-var data = {};
+
 async function copyChannel (channel) {
     data[channel.guild.ownerID].channels.push(channel);
 }
