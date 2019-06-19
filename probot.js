@@ -181,60 +181,123 @@ client.on('raw', event => {
   
 
   
-
+client.on('message', message => {
+if(message.content.startsWith(prefix +'كيف ادخل تجمعات'))  {  
+    message.channel.send("كيفية الدخول معنا في التجمعات؟** \n 1 تسحب الشاشة من اليسار الى اليمين \n 2 تدخل روم اسمه تجمعات \n 3 وهكدا انت معنا في تجمعات");
+    }
+  });
 
 
 
  
+  client.on('message', message => {//حقوق Alpha and FireKingYT and SoEdit
+    if (message.author.bot) return;//حقوق Alpha and FireKingYT and SoEdit
+    if (!message.content.startsWith(prefix)) return;//حقوق Alpha and FireKingYT and SoEdit
+  let args = message.content.split(" ").slice(1);//حقوق Alpha and FireKingYT and SoEdit
+  let x = args.join(" ")//حقوق Alpha and FireKingYT and SoEdit
+    if(message.content.startsWith(prefix + 'say')) {//حقوق Alpha and FireKingYT and SoEdit
+        let FireKing1 = new Discord.RichEmbed()//حقوق Alpha and FireKingYT and SoEdit
+        .setTitle("**اختار كيف تريد الساي**")//حقوق Alpha and FireKingYT and SoEdit
+       .setDescription(`**
+       📬 | اذا تريد البوت يرسلك ساي بي امبد
+       📇 | اذا تريد البوت يرسلك ساي بدون امبد
+       **`)//حقوق Alpha and FireKingYT and SoEdit
+        message.channel.send(FireKing1).then(b => {//حقوق Alpha and FireKingYT and SoEdit
+            b.react('📇')//حقوق Alpha and FireKingYT and SoEdit
+            .then(() => b.react('📬'))//حقوق Alpha and FireKingYT and SoEdit and SoEdit
+            .then(() =>b.react('📇'))//حقوق Alpha and FireKingYT and SoEdit
+            let reaction2Filter = (reaction, user) => reaction.emoji.name === '📇' && user.id === message.author.id;//حقوق Alpha and FireKingYT and SoEdit
+let reaction1Filter = (reaction, user) => reaction.emoji.name === '📬' && user.id === message.author.id;//حقوق Alpha and FireKingYT and SoEdit
+//حقوق Alpha and FireKingYT and SoEdit
+let reaction1 = b.createReactionCollector(reaction1Filter, { time: 12000 });//حقوق Alpha and FireKingYT and SoEdit
+let reaction2 = b.createReactionCollector(reaction2Filter, { time: 12000 });//حقوق Alpha and FireKingYT and SoEdit
+reaction2.on("collect", r => {//حقوق Alpha and FireKingYT and SoEdit
+    message.channel.send('#'+x).then(a => {//حقوق Alpha and FireKingYT and SoEdit
+        a.delete(5000)//حقوق Alpha and FireKingYT and SoEdit
+    })//حقوق Alpha and FireKingYT and SoEdit
+    })//حقوق Alpha and FireKingYT and SoEdit
+    reaction1.on("collect", r => {//حقوق Alpha and FireKingYT and SoEdit
+        let FireKing2 = new Discord.RichEmbed()//حقوق Alpha and FireKingYT and SoEdit
+    .setDescription('#'+x)//حقوق Alpha and FireKingYT and SoEdit
+    .setFooter(`Alpha Codes For Ever`)//حقوق Alpha and FireKingYT and SoEdit
+    message.channel.send(FireKing2).then(a => {//حقوق Alpha and FireKingYT and SoEdit
+    a.delete(5000)//حقوق Alpha and FireKingYT and SoEdit
+    //حقوق Alpha and FireKingYT and SoEdit
+    })//حقوق Alpha and FireKingYT and SoEdit
+    })//حقوق Alpha and FireKingYT and SoEdit
+        })//حقوق Alpha and FireKingYT and SoEdit
+    }//حقوق Alpha and FireKingYT and SoEdit
+});//حقوق Alpha and FireKingYT and SoEdit
   
-  
-let newsjson = JSON.parse(fs.readFileSync("./news.json", "utf8")) || {}
-client.on('message', message => {
-    let news = message.content.split(" ").slice(1).join(" ")
-    if(message.content.startsWith(prefix + 'setnews')) {
-      if(message.author.id !== '568859641379946516') return;
-          if(!news) return message.channel.send(`❌ | Please Write The News For Example: ${prefix}setnews fix bugs`)
-           newsjson[client.user.id] = {
-            new: news,
-           }
-           message.channel.send(`✅ | Done The Bot News Has Been Updated !`)
-        }
-    if(message.content.startsWith( prefix + 'news')) {
-        if(!newsjson[client.user.id]) newsjson[client.user.id] = {
-            new: 'nothing'
-        }
-        let embed = new Discord.RichEmbed()
-        .setTitle(`📰 | ${client.user.username} Latest News :`)
-        .setDescription(`${newsjson[client.user.id].new}`)
-        .setTimestamp()
-        .setFooter(`Requested By ${message.author.username}`)
-           message.channel.sendEmbed(embed)
-        }
-        fs.writeFile("./news.json", JSON.stringify(newsjson), (err) => {
-        })
-})
 
 
                          
 
-               
+           const invites = {};
+const wait = require('util').promisify(setTimeout);
+client.on('ready', () => {
+  wait(1000);
+  client.guilds.forEach(king => {
+    king.fetchInvites().then(guildInvites => {
+      invites[king.id] = guildInvites;
+    });
+  });
+});
+
 client.on('guildMemberAdd', member => {
   member.guild.fetchInvites().then(guildInvites => {
-    const ei = invites[member.guild.id];
-    const invite = guildInvites.find(i => ei.get(i.code).uses < i.uses);
+    const gamer = invites[member.guild.id];
+    invites[member.guild.id] = guildInvites;
+    const invite = guildInvites.find(i => gamer.get(i.code).uses < i.uses);
     const inviter = client.users.get(invite.inviter.id);
-    const stewart = member.guild.channels.find("name", "✿-welcome_الـترحــيـب");
-     stewart.send(`<@${member.user.id}> تمت الدعوه من <@${inviter.id}>`);
-   //  stewart.send(`<@${member.user.id}> joined using invite code ${invite.code} from <@${inviter.id}>. Invite was used ${invite.uses} times since its creation.`);
-  }); 
-});
+    const welcome = member.guild.channels.find(channel => channel.name === "✿-welcome_الـترحــيـب");
+    welcome.send(` ||${member.user.tag}|| invited by ||${inviter.tag}|| invites =  ||${invite.uses}|| `)
+  });
+});    
  
                              
 
    
        
 
+client.on('message', message =>{
+  if(message.content.startsWith(prefix + 'stats')){
+  if(!message.guild.member(message.author).hasPermissions('MANAGE_CHANNELS')) return message.reply('❌ **لا تملك صلاحية**');
+  if(!message.guild.member(client.user).hasPermissions(['MANAGE_CHANNELS'])) return message.reply('❌ **البوت لا يمتلك صلاحية**');
+  message.guild.createChannel(` • |معلومات السيرفر| • :` , 'category')
+  
+    message.guild.createChannel(`"انتظر قليلا` , 'voice').then(time => {
+    time.overwritePermissions(message.guild.id, {
+      CONNECT: false,
+      SPEAK: false
+    });
+  
+  setInterval(() => {
+      time.setName(`${message.guild.memberCount} <== عدد الكل `);
+ },1000);
+    });
 
+ message.guild.createChannel(`"انتظر قليلا` , 'voice').then(time => {
+  time.overwritePermissions(message.guild.id, {
+    CONNECT: false,
+    SPEAK: false
+  });
+setInterval(() => {
+    time.setName(`${message.guild.members.filter(m =>!m.user.bot).size} <==  عدد الاعضاء `);
+},1500);
+});
+
+message.guild.createChannel(`"انتظر قليلا` , 'voice').then(time => {
+  time.overwritePermissions(message.guild.id, {
+    CONNECT: false,
+    SPEAK: false
+  });
+setInterval(() => {
+    time.setName(`${message.guild.members.filter(m=>m.user.bot).size} <==  عدد البوتات `);
+},2000);
+});
+}
+});
 
 
 
