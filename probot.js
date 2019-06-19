@@ -88,7 +88,7 @@ client.on("message", async function (msg) {
 
 
  const yourID = "411613098923786241"; 
-const setupCMD = "+activterole"
+const setupCMD = `${prefix}activterole`
 let initialMessage = ``;
 const roles = ["♱  عــــضــــو ☯"];
 const reactions = ['☑'];
@@ -1740,7 +1740,7 @@ client.on("message", message => {
 var AsciiTable = require('ascii-data-table').default
 client.on('message', message =>{
 
-    if(message.content == "+roles"){
+    if(message.content == `${prefix}roles`){
         if(message.guild.member(message.author).hasPermission("ADMINISTRATOR"))
         var 
         ros=message.guild.roles.size,
@@ -2019,73 +2019,73 @@ message.author.sendMessage(`
 
 الاوامر العامة
 
-+id معلومات عن حسابك الشخصي
+${prefix}id معلومات عن حسابك الشخصي
 
-+server معلومات حول السيرفر
+${prefix}server معلومات حول السيرفر
 
-+move سحب عضو الى رومك الصوتي
+${prefix}move سحب عضو الى رومك الصوتي
 
-+clear مسح الرسائل الموجوده في الروم بعدد
+${prefix}clear مسح الرسائل الموجوده في الروم بعدد
 
-+avatar يعرض اك صورتك الشخصية
+${prefix}avatar يعرض اك صورتك الشخصية
 
-+image يعرض لك صورة السيرفر
+${prefix}image يعرض لك صورة السيرفر
 
-+credit يوريك كم الكريديت حقتك
+${prefix}credit يوريك كم الكريديت حقتك
 
-+daily يسوي لك سحب فلوس
+${prefix}daily يسوي لك سحب فلوس
 
-+rep يعطي ريب
+${prefix}rep يعطي ريب
 
 أوامر ادارة السيرفرات 
 
-+ban حضر عضو من السيرفر
+${prefix}ban حضر عضو من السيرفر
 
-+welcome لعرض قائمه اوامر الويلكم
+${prefix}welcome لعرض قائمه اوامر الويلكم
 
-+autorole لتشغيل الاوتو رول وتحديد الرتبه
+${prefix}autorole لتشغيل الاوتو رول وتحديد الرتبه
 
-+kick طرد عضو من السيرفر
+${prefix}kick طرد عضو من السيرفر
 
-+mute اعضاء ميوت كتابي لعضو في السيرفر
+${prefix}mute اعضاء ميوت كتابي لعضو في السيرفر
 
-+unmute فك الميوت عن عضو في السيرفر
+${prefix}unmute فك الميوت عن عضو في السيرفر
 
-+dac حذف جميع رومات السيرفر
+${prefix}dac حذف جميع رومات السيرفر
 
-+dar حذف جميع رتب السيرفر
+${prefix}dar حذف جميع رتب السيرفر
 
-+openroom فتح المحادثة في الروم
+${prefix}openroom فتح المحادثة في الروم
 
-+closeroom قفل المحادثة في الروم
+${prefix}closeroom قفل المحادثة في الروم
 
-+role اعطاء رتبه لشخض معين
+${prefix}role اطاء رتبه لشخض معين
 
-+role humans اعطاء رتب للبشريين
+${prefix}role humans اعطاء رتب للبشريين
 
-+role bots اعطاء رتبه للبوتات
+${prefix}role bots اعطاء رتبه للبوتات
 
-+role all اعطاء رتبه للجميع سواء بشر او بوتات
+${prefix}role all اعطاء رتبه للجميع سواء بشر او بوتات
 
-+-role سحب الرتبه من شخص معين
+${prefix}-role سحب الرتبه من شخص معين
 
-+-role humans سحب رتبه من الميمبرز
+${prefix}-role humans سحب رتبه من الميمبرز
 
-+-role bots سحب رتبه للبوتات
+${prefix}-role bots سحب رتبه للبوتات
 
-+-role all سحب رتبه معينه من جميع الاعضاء سواء يوزرات او بوتات
+${prefix}-role all سحب رتبه معينه من جميع الاعضاء سواء يوزرات او بوتات
 
-+temp on تشغيل الرومات المؤقته
+${prefix}temp on تشغيل الرومات المؤقته
 
-+temp off اطفاء الرومات المؤقته
+${prefix}temp off اطفاء الرومات المؤقته
 
 اخرى 
 
 رابط سيرفر الدعم الفني
 
-+inv رابط اضافة البوت
+${prefix}inv رابط اضافة البوت
 
-+ping لمعرفه سرعه اتصال البوت
+${prefix}ping لمعرفه سرعه اتصال البوت
 
 **`);
 
@@ -2320,7 +2320,7 @@ message.channel.send(`**:moneybag: | ${message.author.username}, has transferrer
 	      
 	      
 client.on('message', message =>{
-  if(message.content === '+ping'){
+  if(message.content === `${prefix}ping`){
 let start = Date.now(); message.channel.send('pong').then(message => { 
 message.edit(`\`\`\`js
 Time taken: ${Date.now() - start} ms
